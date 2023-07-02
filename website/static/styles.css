@@ -2,10 +2,12 @@
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
 
-body {
+html, body {
   color: #5a5a5a;
   font-family: 'Montserrat', sans-serif;
   font-family: 'Poppins', sans-serif;
+  min-height: 100%; 
+  position: relative;
 }
 
 #navbar_logo {
@@ -75,8 +77,11 @@ body {
   height: 100%;
 }
 
-footer {
-  margin-top: 10px;
+.footer {
+  height: 50px; /* Adjust the height of the footer accordingly */
+  position: relative;
+  bottom: 0;
+  width: 100%;
 }
 
 /* MARKETING CONTENT
