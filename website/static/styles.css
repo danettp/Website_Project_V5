@@ -10,6 +10,12 @@ html, body {
   position: relative;
 }
 
+.article-img {
+  height: 65px;
+  width: 65px;
+  margin: 16px; 
+}
+
 #navbar_logo {
   height: 60px; 
 }
