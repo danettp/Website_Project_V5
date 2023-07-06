@@ -1,3 +1,7 @@
+import os
+from pathlib import Path
+from PIL import Image
+import secrets
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 from .models import Post, User, Comment, Like
@@ -127,3 +131,14 @@ def like(post_id):
         db.session.commit()
 
     return jsonify({"likes": len(post.likes), "liked": current_user.id in map(lambda x: x.author, post.likes)}) 
+
+def save_picture(form_picture):
+    path = Path("website/static/profile_pics")
+    random_hex = secrets.token_hex(8)
+    _,f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext # Random hex filename and add on file extension
+    output_size = (125, 125)
+    picture_path = os.path.join(path, picture_fn)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
