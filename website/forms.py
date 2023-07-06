@@ -40,6 +40,6 @@ class UpdateAccountForm(FlaskForm):
     
     def validate_email(self, email):
         if email.data !=current_user.email:
-        user = User.query.filter_by(email=email.data).first()
-        if user:
-            raise ValidationError('That email is already taken. Please choose a different one.')
+            user = User.query.filter_by(email=email.data).first()
+            if user:
+                raise ValidationError('That email is already taken. Please choose a different one.')
