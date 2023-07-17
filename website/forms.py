@@ -25,7 +25,7 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError('That email is already taken. Please choose a different one.')
         
-
+# Update Account form
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=25)])
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -33,13 +33,18 @@ class UpdateAccountForm(FlaskForm):
     submit = SubmitField('Update')
     
     def validate_username(self, username):
+        # Custom validation for the username field
         if username.data !=current_user.username:
-            user = User.query.filter_by(username=username.data).first()
+            # Check if the entered username is different from the current user's username
+            user = User.query.filter_by(username=username.data).first() 
+            # Query the database to check if another user already has the same username
             if user:
+                # If a user with the entered username already exists, raise a validation error
                 raise ValidationError('That Username is already taken. Please choose a different one.')
     
     def validate_email(self, email):
         if email.data !=current_user.email:
             user = User.query.filter_by(email=email.data).first()
             if user:
+                # If a user with the entered email already exists, raise a validation error
                 raise ValidationError('That email is already taken. Please choose a different one.')

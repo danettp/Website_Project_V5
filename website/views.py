@@ -19,6 +19,7 @@ def home():
     posts = Post.query.all()
     return render_template("home.html", user=current_user, posts=posts)
 
+# Route for blog page
 @views.route("/blog")
 @login_required
 def blog():
@@ -26,6 +27,7 @@ def blog():
     posts = Post.query.order_by(Post.date_created.desc()).paginate(page=page, per_page=4)
     return render_template("blog.html", user=current_user, posts=posts)
 
+# Route for creating a post
 @views.route("/create-post", methods=['GET', 'POST'])
 @login_required
 def create_post():
@@ -146,21 +148,24 @@ def save_picture(form_picture):
     
     return picture_fn
 
+# Route for account page
 @views.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
     form = UpdateAccountForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit(): # Check if the form has been submitted and is valid
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
             current_user.image_file = picture_file
+        # Update the user's username and email with the values from the form
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
-        flash('Your account has been updated')
+        flash('Your account has been updated') # Flash a success message to the user
         return redirect(url_for('views.account'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
+    # Get the URL for the user's profile picture
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', user=current_user, image_file=image_file, form=form)

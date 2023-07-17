@@ -44,9 +44,13 @@
         {% endif %}
         </div>
     </br>
+
+          <!-- Form group for profile picture -->
           <div class="form-group">
             {{ form.picture.label() }}
             {{ form.picture(class="form-control-file") }}
+
+            <!-- If there are errors, display error messages -->
             {% if form.picture.errors %}
                 {% for error in form.picture.errors %}
                     <span class="text-danger">{{ error }}
